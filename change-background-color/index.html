@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>切換顏色練習</title>
 </head>
+
 <body>
     <script src="../jquery-3.7.1.js"></script>
     <script>
-        $(document).ready(function(){
-            var colors = ["white","red","yellow","green","blue","pink"]
+        $(document).ready(function () {
+            var colors = ["white", "red", "yellow", "green", "blue", "pink"]
             var colorIndex = 0;
-            $("#defaultButton").click(function(){
+            $("#defaultButton").click(function () {
                 colorIndex = 0
-                $("body").css("background-color",colors[colorIndex]);
+                $("body").css("background-color", colors[colorIndex]);
             })
-            $("#changeButton").click(function(){
-                colorIndex = (colorIndex + 1) % colors.length;
-                $("body").css("background-color",colors[colorIndex]);
+            $("#changeButton").click(function () {
+                // 方法一
+                // colorIndex = (colorIndex + 1) % colors.length;
+                // $("body").css("background-color",colors[colorIndex]);
+
+                // 方法二
+                if (colorIndex < colors.length -1) {
+                    colorIndex++;
+                } else {
+                    colorIndex = 0
+                }
+                $("body").css("background-color", colors[colorIndex]);
             })
         })
     </script>
@@ -26,4 +37,5 @@
     <input id="changeButton" type="button" value="點我切換顏色">
     <input id="defaultButton" type="button" value="點我回到預設">
 </body>
+
 </html>
