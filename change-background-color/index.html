@@ -21,15 +21,15 @@
                 $("#colorContainer").empty();
                 $("body").css("background-color", "white");
             });
-            
+
             // 方法一 根據白、紅、黃、綠、藍、粉 變換
             $("#changeButton").click(function () {
                 let colors = ["white", "red", "yellow", "green", "blue", "pink"]
-                
+
                 // 寫法一
                 // colorIndex = (colorIndex + 1) % colors.length;
                 // $("body").css("background-color", colors[colorIndex]);
-                
+
                 // 寫法二
                 if (colorIndex < colors.length - 1) {
                     colorIndex++;
@@ -40,10 +40,10 @@
             });
 
             /* 方法二 點擊後直接取隨機數
-            * Math.floor() - 將小數點去除取整數
-            * Math.random() - 返回0~1之間的隨機數
-            * .toString(16) - 將內容轉為16進制的字串
-            * 16777216 - RGB顏色中，顏色共有16777216種
+            Math.floor() - 將小數點去除取整數
+            Math.random() - 返回0~1之間的隨機數
+            .toString(16) - 將內容轉為16進制的字串
+            16777216 - RGB顏色中，顏色共有16777216種
             */
             $("#randomButton").click(function () {
                 var randomColor = "#" + Math.floor(Math.random() * 16777216).toString(16);
@@ -56,14 +56,21 @@
                 $("body").css("background-color", colors[colorIndex]);
             })
 
-            // 新增顏色表
+            /* 新增顏色表
+            .attr 操作元素屬性
+                1. 獲取目標屬性的值
+                    $("目標").attr("屬性") 
+                2. 新增目標屬性的值
+                    $("目標").attr("屬性","值") 
+            */
             $("#createColorButton").click(function () {
                 var randomColor = "#" + Math.floor(Math.random() * 16777216).toString(16);
                 colors.push(randomColor);
                 var colorDisplay = $('<div></div>')
-                    .addClass('color-display')
+                    .attr('id', randomColor)
                     .text(randomColor)
                     .css('background-color', randomColor);
+
                 $("#colorContainer").append(colorDisplay);
             })
         })
