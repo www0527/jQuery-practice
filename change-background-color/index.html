@@ -11,31 +11,80 @@
     <script src="../jquery-3.7.1.js"></script>
     <script>
         $(document).ready(function () {
-            var colors = ["white", "red", "yellow", "green", "blue", "pink"]
             var colorIndex = 0;
+            var colors = [];
+
+            // 回到預設
             $("#defaultButton").click(function () {
                 colorIndex = 0
-                $("body").css("background-color", colors[colorIndex]);
-            })
+                colors.length = 0
+                $("#colorContainer").empty();
+                $("body").css("background-color", "white");
+            });
+            
+            // 方法一 根據白、紅、黃、綠、藍、粉 變換
             $("#changeButton").click(function () {
-                // 方法一
+                let colors = ["white", "red", "yellow", "green", "blue", "pink"]
+                
+                // 寫法一
                 // colorIndex = (colorIndex + 1) % colors.length;
-                // $("body").css("background-color",colors[colorIndex]);
-
-                // 方法二
-                if (colorIndex < colors.length -1) {
+                // $("body").css("background-color", colors[colorIndex]);
+                
+                // 寫法二
+                if (colorIndex < colors.length - 1) {
                     colorIndex++;
                 } else {
                     colorIndex = 0
                 }
                 $("body").css("background-color", colors[colorIndex]);
+            });
+
+            /* 方法二 點擊後直接取隨機數
+            * Math.floor() - 將小數點去除取整數
+            * Math.random() - 返回0~1之間的隨機數
+            * .toString(16) - 將內容轉為16進制的字串
+            * 16777216 - RGB顏色中，顏色共有16777216種
+            */
+            $("#randomButton").click(function () {
+                var randomColor = "#" + Math.floor(Math.random() * 16777216).toString(16);
+                $("body").css("background-color", randomColor);
+            });
+
+            // 方法三 根據顏色表變化顏色
+            $("#colorsListButton").click(function () {
+                colorIndex = (colorIndex + 1) % colors.length;
+                $("body").css("background-color", colors[colorIndex]);
+            })
+
+            // 新增顏色表
+            $("#createColorButton").click(function () {
+                var randomColor = "#" + Math.floor(Math.random() * 16777216).toString(16);
+                colors.push(randomColor);
+                var colorDisplay = $('<div></div>')
+                    .addClass('color-display')
+                    .text(randomColor)
+                    .css('background-color', randomColor);
+                $("#colorContainer").append(colorDisplay);
             })
         })
     </script>
 
     <h1>切換背景顏色</h1>
-    <input id="changeButton" type="button" value="點我切換顏色">
-    <input id="defaultButton" type="button" value="點我回到預設">
+    <input id="changeButton" type="button" value="白、紅、黃、綠、藍、粉">
+    <input id="randomButton" type="button" value="隨機變色">
+    <br>
+    <br>
+    <input type="button" value="新增顏色" id="createColorButton">
+    <input id="colorsListButton" type="button" value="根據顏色表變色">
+    <div>
+        <br>
+        <input id="defaultButton" type="button" value="點我回到預設">
+    </div>
+    <br>
+    <div>
+        顏色表
+        <div id="colorContainer"></div>
+    </div>
 </body>
 
 </html>
