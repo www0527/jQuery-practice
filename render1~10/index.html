@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../jquery-3.7.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            var second = 0;
+
+            // 渲染內容
+            function render(n) {
+                var render = $("<div></div>")
+                    .addClass("second")
+                    .text(n)
+                $("#numberContainer").empty() // $("目標").empty() 清除目標內的全部內容
+                $("#numberContainer").append(render) // $("目標").append("內容") 在目標內加入內容
+            }
+
+            // 1~10 邏輯
+            function oneToTen() {
+                // setInterval(動作,1000) 每 1 秒執行一次動作
+                setInterval(function () {
+                    if (second > 9) {
+                        second = 1;
+                        render(second)
+                    } else {
+                        second++;
+                        render(second);
+                    }
+                }, 1000)
+            }
+
+            oneToTen();
+        })
+    </script>
+    <div id="numberContainer"></div>
+</body>
+
+</html>
