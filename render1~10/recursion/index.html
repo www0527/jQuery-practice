@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../../jquery-3.7.1.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            
+            let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 秒數陣列
+            
+            // 顯示秒數邏輯
+            function displayNumbers() { 
+                
+                // 迴圈重複執行{陣列長度}次
+                for (let i = 0; i < numbers.length; i++) {
+                    
+                    // 設定延遲
+                    setTimeout(
+                        () => {
+                            $('#numberContainer').empty(); // 清空 numberContainer 內的元素
+                            $('#numberContainer').text(numbers[i]); // 在 numberContainer 內加入陣列第 i 個位置的字
+
+                            // 遞迴(recursion)： 當 i = 陣列長度時，在執行一次 function displayNumbers()
+                            if (i === numbers.length - 1) {
+                                setTimeout(displayNumbers, 1000);
+                            }
+                        },
+                        i * 1000 // 當 i 秒時，執行一次
+                    );
+                }
+            }
+
+            // 執行顯示秒數
+            displayNumbers();
+        })
+    </script>
+    <div id="numberContainer"></div>
+</body>
+
+</html>
