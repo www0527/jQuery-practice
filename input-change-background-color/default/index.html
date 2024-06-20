@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>input切換背景顏色</title>
+    
+</head>
+<body>
+    <!-- 本章學習
+    
+    * $("目標").on("動作", function(){...})
+    綁定事件到目標上,類似 eventListener
+    
+    * $(物件).val()
+    取物件的值
+    
+    * $(目標).val(參數)
+    將參數作為值賦予給目標
+    
+    * .toUpperCase()
+    將英文字母轉換為大寫
+
+    * /^#?([0-9A-F]{3}|[0-9A-F]{6})$/
+    正則表達式，檢查是否為16進制色碼
+
+    * 目標.test(內容)
+    目標 === 內容 ? true : false
+
+    * 目標.prop("屬性", 參數)
+    將目標的屬性改為參數
+
+
+    -->
+    
+    <script src="../../jquery-3.7.1.js"></script>
+    <script>
+        $(document).ready(function(){
+            var colorInput = $('.colorInput');
+            var changeButton = $(".changeButton")
+            var alertP = $('#test')
+
+            colorInput.on("input", function(){
+                var colorCode =$(this).val().toUpperCase()
+                $(this).val(colorCode)
+
+                var hexPattern = /^#?([0-9A-F]{3}|[0-9A-F]{6})$/;
+
+                if (hexPattern.test(colorCode)){
+                    console.log(hexPattern.test(colorCode));
+                    alertP.html("")
+                    changeButton.prop("disabled", false); 
+                    changeButton.click(function(){
+                        $("body").css("background-color", "#" + colorCode)
+                    })
+                }else{
+                    alertP.html("請輸入正確的色碼")
+                    changeButton.prop("disabled", true);
+                }
+            })
+        })
+    </script>
+    <input class="colorInput" type="text" placeholder="輸入色碼">
+    <span id="test" style="color: red;"></span>
+    <div style="margin-top: 15px;">
+        <input class="changeButton" type="button" value="點擊更換背景" disabled>
+    </div>
+</body>
+</html>
