@@ -47,7 +47,6 @@
                 var hexPattern = /^#?([0-9A-F]{3}|[0-9A-F]{6})$/;
 
                 if (hexPattern.test(colorCode)){
-                    console.log(hexPattern.test(colorCode));
                     alertP.html("")
                     changeButton.prop("disabled", false); 
                     changeButton.click(function(){
