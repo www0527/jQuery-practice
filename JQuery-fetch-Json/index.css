@@ -1,0 +1,62 @@
+.productContainer {
+    width: 100%;
+}
+ul{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+@media only screen and (min-width: 801px) {
+    .productContainer {
+        display: flex;
+        justify-content:space-around;
+    }
+    
+    img {
+        width: 50%;
+        height: 60.5%;
+    }
+    
+    .productCard {
+        display: flex;
+        width: 30%;
+    }
+    
+    .contentDiv {
+        display: flex;
+        flex-direction: column;  /* 垂直排列子元素 */
+        justify-content: center;  /* 垂直居中 */
+        height: 60%;
+        width: 100%;
+        border: 1px solid #000;  /* 添加邊框以便看到 div 的邊界 */
+        padding: 0 5px;
+    }
+}
+@media only screen and (max-width: 800px) {
+    .productContainer {
+        /* display: flex; */
+        justify-content:space-around;
+    }
+    
+    img {
+        width: 30%;
+        height: 60.5%;
+    }
+    
+    .productCard {
+        display: flex;
+        padding: 5%;
+        width: 90%;
+    }
+    
+    .contentDiv {
+        display: flex;
+        flex-direction: column;  /* 垂直排列子元素 */
+        justify-content: center;  /* 垂直居中 */
+        height: auto;  /* 設置一個高度以便能看到效果 */
+        width: 100%;
+        border: 1px solid #000;  /* 添加邊框以便看到 div 的邊界 */
+        padding: 0 5px;
+    }
+}
