@@ -1,0 +1,31 @@
+/* 清除浮動 */
+.productContainer {
+    overflow: hidden;
+}
+
+/* 每三個卡片分組 */
+.productContainer:nth-child(3n+1) {
+    clear: both;
+    /* 每三個元素的第一個清除浮動 */
+}
+
+.productContainer:nth-child(3n+1),
+.productContainer:nth-child(3n+2),
+.productContainer:nth-child(3n+3) {
+    width: calc(33.33% - 20px); /* 每組卡片佔33.33%的寬度，並留有一些間距 */
+    margin: 0 0.6%;
+    margin-bottom: 20px;
+    float: left;
+    box-sizing: border-box;
+}
+
+/* 單獨處理最後一行剩餘的卡片 */
+.productContainer:nth-last-child(-n+3) {
+    clear: both;
+    /* 最後三個卡片清除浮動 */
+}
+
+img {
+    width: 50%;
+    height: 60.5%;
+}

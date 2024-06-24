@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="nav">
+            <ul>
+                <li><a id="ring" href="#">ring</a></li>
+                <li><a id="dress" href="#">dress</a></li>
+                <li><a id="shoes" href="#">shoes</a></li>
+                <li><a id="accessory" href="#">accessory</a></li>
+            </ul>
+        </div>
+        <div class="loading"></div>
+        <div class="main2"></div>
+    </div>
+    <script src="../jquery-3.7.1.js"></script>
+    <script>
+        function getAllProductData() {
+            return new Promise(function (resolve, reject) {
+                let PostData = {};
+                var SendPostUrl = "https://www.limaytech.com/p.php";
+                $.post(SendPostUrl, PostData, function () { })
+                    .done(function (data) {
+                        let productData = JSON.parse(data);
+                        resolve(productData);
+                    })
+            });
+        }
+
+        function renderProduct(currentData) {
+            $(".main2").empty();
+
+            // 渲染邏輯
+            for (var r = 0; r < currentData.length; r++) {
+                $(".main2").append($("<div></div>").addClass("productContainer"));
+
+                var productCard = $("<div></div>").addClass("productCard product-" + r);
+                var img = $("<img>").attr("src", currentData[r]["Product Img"]).attr("alt", "product-" + r);
+                var contentDiv = $("<div></div>").addClass("contentDiv");
+                var name = $("<div></div>").text("Name: " + currentData[r]["Product Name"]);
+                var price = $("<div></div>").text("Price: " + currentData[r]["Product Price"]);
+                var type = $("<div></div>").text("Type: " + currentData[r]["Product Type"]);
+
+                productCard.append(img);
+                productCard.append(contentDiv);
+                contentDiv.append(name);
+                contentDiv.append(price);
+                contentDiv.append(type);
+                $(".productContainer").append(productCard);
+            }
+        }
+
+        $(document).ready(function () {
+            $('.loading').html('Loading data...');
+
+            getAllProductData().then(function (allData) {
+                $('.loading').html('');
+
+                var ringData = [];
+                var dressData = [];
+                var shoesData = [];
+                var accessoryData = [];
+                // 分類產品數據
+                for (var i = 0; i < allData.length; i++) {
+                    switch (allData[i]["Product Type"]) {
+                        case "Dress":
+                            dressData.push(allData[i]);
+                            break;
+                        case "Shoes":
+                            shoesData.push(allData[i]);
+                            break;
+                        case "Accessory":
+                            accessoryData.push(allData[i]);
+                            break;
+                        default:
+                            ringData.push(allData[i]);
+                            break;
+                    }
+                }
+
+                var currentData = ringData; // 初始顯示ring產品
+                renderProduct(currentData); // 初始渲染
+
+                // nav的click事件
+                function handleNavClick(event) {
+                    switch (event.target.id) {
+                        case "ring":
+                            currentData = ringData;
+                            break;
+                        case "dress":
+                            currentData = dressData;
+                            break;
+                        case "shoes":
+                            currentData = shoesData;
+                            break;
+                        case "accessory":
+                            currentData = accessoryData;
+                            break;
+                        default:
+                            currentData = ringData;
+                            break;
+                    }
+                    $(".main2").html("");
+                    renderProduct(currentData);
+                };
+                $("#ring").on("click", handleNavClick);
+                $("#dress").on("click", handleNavClick);
+                $("#shoes").on("click", handleNavClick);
+                $("#accessory").on("click", handleNavClick);
+            })
+        });
+    </script>
+</body>
+
+</html>
