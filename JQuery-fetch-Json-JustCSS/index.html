@@ -7,7 +7,6 @@
     <title>Document</title>
     <link rel="stylesheet" href="index.css">
 </head>
-
 <body>
     <div class="main">
         <div class="nav">
@@ -21,6 +20,28 @@
         <div class="loading">Loading data...</div>
         <div class="main2"></div>
     </div>
+
+    <!--* 本章學習 
+    $.post( url, sendData, function(){}).done(function(getData){})
+        url：API 的 url
+        sendData：發送請求時需要傳送的 data
+        function(){}：請求成功時執行的函數
+        .done(function(getData){})：Deferred 對象方法，請求成功時將API回傳的數據裝進參數 data 內。
+
+    Json.parse(data)
+        將 Json 格式的字串轉變成 JS 可用的物件。
+
+    switch case 
+        用來代替多個if else
+        switch (data){
+            case data = 1:
+                log("1")
+            case data = 2:
+                log("2")
+            default:
+                log("data != 1 & 2")
+        }
+    -->
     <script src="../jquery-3.7.1.js"></script>
     <script>
         let html = "";

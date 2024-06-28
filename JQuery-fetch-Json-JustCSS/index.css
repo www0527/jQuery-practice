@@ -1,7 +1,23 @@
+/* * 本章學習
+Grid 排版
+    display: grid;
+    grid-template-columns: 1fr 2fr 3fr
+    gap: 10px;
+
+    －－－         －－－ －－－         －－－
+    |    | {10px} |     |     | {10px} |     |
+    －－－         －－－ －－－         －－－
+
+RWD
+    @media screen and (min-width:200px){樣式}
+        維持樣式，直到畫面小於200px
+*/
+
+
 .main2 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 每行三個 */
-    gap: 10px; /* 设置每个产品之间的间距 */
+    grid-template-columns: repeat(3, 1fr); /* 重複執行3次，每次切割可用空間的1等分 */
+    gap: 10px; /* 設置每個grid的間距 */
 }
 
 .productContainer {
