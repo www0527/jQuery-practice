@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .productDiv {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .productDiv img {
+            width: 100%;
+            height: auto;
+        }
+
+        @media screen and (min-width:576px) {
+            .productDiv {
+                font-size: 30px;
+            }
+        }
+
+        @media screen and (min-width:768px) {
+            .productDiv {
+                font-size: 25px;
+            }
+        }
+
+        @media screen and (min-width:992px) {
+            .productDiv {
+                font-size: 25px;
+            }
+        }
+
+        @media screen and (min-width:1200px) {
+            .productDiv {
+                font-size: 30px;
+            }
+        }
+
+        @media screen and (min-width:1400px) {
+            .productDiv {
+                font-size: 30px;
+            }
+        }
+    </style>
+
+
+    <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
+    <script>
+
+        function ttt() {
+            let PostData = {};
+            PostData.param1 = "123";
+            var SendPostUrl = "https://www.limaytech.com/p.php"; //   Order dash & Inventory Dash
+            var Loader = $.post(SendPostUrl, PostData, function () {
+            }).done(function (data) {
+                let p = JSON.parse(data);
+                let html = "";
+                for (let i = 0; i < p.length; i++) {
+                    product = p[i];
+                    let Pname = product["Product Name"];
+                    let Pimg = product["Product Img"];
+                    let Pprice = product["Product Price"];
+
+                    html += `<div class="productDiv">
+                    <h1>${Pname}</h1>
+                    <p>Price: ${Pprice}</p>
+                    <img src="${Pimg}" alt="${Pname}">
+                    </div>`;
+
+                }
+                $(".container").html(html);
+
+            });
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+    <button onclick="ttt()">取得產品</button>
+    <div class="container"></div>
+
+
+
+</body>
+
+
+
+
+
+
+
+
+</html>
