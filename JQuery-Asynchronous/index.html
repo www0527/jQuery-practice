@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="../jquery-3.7.1.js"></script>
+    <script src="https://kit.fontawesome.com/b081140726.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="nav">
+            <ul>
+                <li id="ring" onclick="handleNavClick(event)"><i class="fa-solid fa-ring"></i> ring</li>
+                <li id="dress" onclick="handleNavClick(event)"><i class="fa-solid fa-person-dress"></i>dress</li>
+                <li id="shoes" onclick="handleNavClick(event)"><i class="fa-solid fa-shoe-prints"></i>shoes</li>
+                <li id="accessory" onclick="handleNavClick(event)"><i class="fa-solid fa-socks"></i>accessory</li>
+            </ul>
+        </div>
+        <div class="loading">Loading data...</div>
+        <div class="main2"></div>
+    </div>
+
+    <!--* 本章學習 Asynchronous (非同步)
+    連結：https://medium.com/@aaron.eth/js-async-and-await-pr-bab1a77f91af
+    概念：
+        Synchronous (同步)：照著順序來處理。
+        Asynchronous (非同步)：同時處理多個事情。
+        使用 Promise 方法來實現
+
+    Promise三種狀態:
+        1. Pending - 初始狀態
+        2. Fulfilled - 操作完成
+        3. Rejected - 操作失敗
+    
+    new Promise(function(resolve, reject) {});
+        resolve(值) - 當resolve(值) 被呼叫時，狀態由pending轉為fulfilled，且會回傳值參數 resolve
+        reject() - rejected(值) 被呼叫時，狀態由pending轉為rejected，且會回傳值給參數 reject
+    
+    .then(resolveFunction, rejectFunction)
+        用於設定Promise的後續動作，第一個參數接resolve後要做的事，第二個參數接rejected後要做的事情
+
+    .them((resolveValue)=>{})
+    .catch((rejectValue)=>{})
+        .catch可與.then一起使用，讓then處理通過時的邏輯，而catch處理失敗的邏輯
+
+    Async/Await
+        用接近同步處理的寫法，達成非同步的函式。
+        Async - 當函式標記為 async，必定回傳Promise
+        Await - async 函式中使用，會等到 Promise 被 resolve 後，才繼續進行下一個語句
+    -->
+    <script>
+        let html = "";
+        var ringData = [];
+        var dressData = [];
+        var shoesData = [];
+        var accessoryData = [];
+        var currentData = ringData;
+
+        // click 事件
+        function handleNavClick(event) {
+            switch (event.target.id) {
+                case "ring":
+                    currentData = ringData;
+                    break;
+                case "dress":
+                    currentData = dressData;
+                    break;
+                case "shoes":
+                    currentData = shoesData;
+                    break;
+                case "accessory":
+                    currentData = accessoryData;
+                    break;
+                default:
+                    currentData = ringData;
+                    break;
+            }
+            $(".main2").html("");
+            renderProduct(currentData);
+        };
+
+        // 邏輯
+        function ClassificationData(
+            allData,
+            ringData,
+            dressData,
+            shoesData,
+            accessoryData
+        ) {
+            for (var i = 0; i < allData.length; i++) {
+                switch (allData[i]["Product Type"]) {
+                    case "Dress":
+                        dressData.push(allData[i]);
+                        break;
+                    case "Shoes":
+                        shoesData.push(allData[i]);
+                        break;
+                    case "Accessory":
+                        accessoryData.push(allData[i]);
+                        break;
+                    default:
+                        ringData.push(allData[i]);
+                        break;
+                }
+            }
+        }
+
+        function renderProduct(currentData) {
+            html = "";
+            $(".main2").empty();
+            // 渲染邏輯
+            for (var r = 0; r < currentData.length; r++) {
+                let product = currentData[r];
+                let ProductName = product["Product Name"];
+                let ProductType = product["Product Type"];
+                let ProductImg = product["Product Img"];
+                let ProductPrice = product["Product Price"];
+
+                html += `<div class="productContainer">
+                    <img src="${ProductImg}" alt="${ProductName}">
+                    <h3>${ProductName}</h3>
+                    <p><i class="fa-solid fa-money-bill"></i> Price: ${ProductPrice}</p>
+                    <p>Type: ${ProductType}</p>
+                    </div>`;
+
+            }
+            $(".main2").html(html);
+        }
+
+        // 獲取資料
+        function getAllProductData() {
+            return new Promise(function (resolve, reject) {
+                var PostData = {};
+                var SendPostUrl = "https://www.limaytech.com/p.php";
+                var load = $.post(SendPostUrl, PostData);
+                load.done(function (data) {
+                    var json = JSON.parse(data);
+                    $('.loading').html('資料載入完成');
+                    resolve(json);
+                });
+                load.fail(function (xhr, status, error) {
+                    reject(error);
+                })
+            })
+        };
+        
+        // 執行
+        async function renderPage() {
+            try {
+                var allData = await getAllProductData()            
+                $('.loading').html('資料載入完成');
+                ClassificationData(allData, ringData, dressData, shoesData, accessoryData);
+                renderProduct(currentData);
+            } catch (error) {
+                $('.loading').html('資料獲取出現問題：' + error);
+                console.error('Fetch data failed:', error);
+            }
+        };
+
+        renderPage();
+
+    </script>
+</body>
+
+</html>

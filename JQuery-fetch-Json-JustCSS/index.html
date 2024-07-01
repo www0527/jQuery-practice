@@ -120,7 +120,7 @@
             renderProduct(currentData);
         };
         
-        // 執行
+        // 執行函式
         function getAllProductData() {
             let PostData = {};
             var SendPostUrl = "https://www.limaytech.com/p.php";
@@ -128,6 +128,7 @@
             }).done(function (data) {
                 // 解析後的JSON
                 var productData = JSON.parse(data);
+
                 $('.loading').html('');
 
                 // 分類產品數據

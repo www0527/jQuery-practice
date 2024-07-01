@@ -1,0 +1,122 @@
+/* * 本章學習
+
+*/
+.nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+        padding: 10px;
+        font-size: 1.5rem;
+    }
+}
+
+.loading {
+    display: flex;
+    justify-content: center; /* 水平置中 */
+    align-items: center; /* 垂直置中 */
+}
+img {
+    max-width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+@media screen and (max-width:992px) {
+    .main2{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 重複執行3次，每次切割可用空間的1等分 */
+        gap: 10px; /* 設置每個grid的間距 */
+    }
+    .productContainer {
+        width: 80%;
+        font-size: 12px;
+        border: 1px solid #ddd;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* 垂直置中 */
+        align-items: center; /* 水平置中 */
+        margin: 5% auto;  /* 水平置中 */
+    }
+
+    ul {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        li {
+            display: flex;
+
+            i {
+                margin-bottom: 5px;
+                /* 調整圖標與文字之間的間距 */
+            }
+        }
+    }
+
+}
+
+@media screen and (min-width:993px) {
+    ul {
+        border: 2px solid #0000;
+        display: grid;
+        width: 100%;
+        margin: 16px 0;
+        padding: 0;
+        grid-template-columns: repeat(4, 1fr);
+        list-style-type: none;
+        text-align: center;
+
+        li {
+            color: #000;
+            font-size: 2rem;
+            cursor: pointer;
+            text-decoration: none;
+
+            i {
+                margin-right: 15px;
+            }
+
+            &:hover {
+                color: #acacac;
+            }
+
+            &:active {
+                color: #d45656
+            }
+        }
+    }
+
+    .main2 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        /* 重複執行3次，每次切割可用空間的1等分 */
+        gap: 10px;
+        /* 設置每個grid的間距 */
+    }
+
+    .productContainer {
+        max-width: 100%;
+        font-size: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        /* 產品邊框 */
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+    }
+}
